@@ -5,6 +5,8 @@
  * Includes Sizzle.js
  * http://sizzlejs.com/
  *
+ * Includes Security Patch for CVE-2019-11358
+ *
  * Copyright jQuery Foundation and other contributors
  * Released under the MIT license
  * http://jquery.org/license
@@ -209,8 +211,9 @@ jQuery.extend = jQuery.fn.extend = function() {
 				src = target[ name ];
 				copy = options[ name ];
 
+				// Prevent Object.prototype pollution
 				// Prevent never-ending loop
-				if ( target === copy ) {
+				if ( name === "__proto__" || target === copy ) {
 					continue;
 				}
 
